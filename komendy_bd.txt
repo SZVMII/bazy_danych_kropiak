@@ -1,0 +1,96 @@
+1.List
+CREATE TABLE postac(
+id_postaci int AUTO_INCREMENT,
+nazwa varchar(40),
+rodzaj enum('wiking','ptak',kobieta'),
+data_ur date,
+wiek int UNSIGNED,
+PRIMARY KEY(id_postaci)
+);
+
+INSERT INTO postac (id_postaci,nazwa,rodzaj,data_ur,wiek) VALUES (
+'1','Bjorn','wiking','1887-09-04','45',
+'2','Drozd','ptak','2001-12-24','4',
+'3','Tesciowa','kobieta','1990-02-14','67'
+);
+
+UPDATE postac wiek=88 WHERE nazwa='Tesciowa';
+
+
+2. Panika
+CREATE TABLE walizka (
+id_walizki int AUTO_INCREMENT,
+pojemnosc int UNSIGNED,
+kolor enum('rozowy','czerwony','teczowy','zolty'),
+id_wlasciciela int,
+PRIMARY KEY (id_walizki),
+FOREIGN KEY (id_wlasciciela) REFERENCES postac(id_postaci) ON DELETE CASCADE
+);
+
+ALTER TABLE walizka ALTER kolor SET DEFAULT 'rozowy';
+
+INSERT INTO walizka(id_walizki,pojemnosc,kolor,id_wlasciciela) VALUES (
+'1','85','teczowy','1',
+'2','50','','3'
+);
+
+
+3.Niespodzianka
+CREATE TABLE izba (
+adres_budynku varchar (40),
+nazwa_izby varchar(40),
+metraz int UNSIGNED,
+wlasciciel int,
+PRIMARY KEY(adres_budynku,nazwa_izby),
+FOREIGN KEY(wlasciciel) REFERENCES postac(id_postaci) ON DELETE SET NULL
+);
+
+ALTER TABLE izba ADD kolor_izby varchar(10) default 'czarny' AFTER metraz;
+
+INSERT INTO izba(adres_budynku,nazwa_izby,metraz,kolor_izby,wlasciciel) VALUES (
+'Srebrna 3','spizarnia','35','czerwony','3'
+);
+
+4.Koszmar
+CREATE TABLE przetwory (
+id_przetworu int,
+rok_produkcji int(4) default 1654,
+id_wykonawcy int,
+zawartosc varchar(50),
+dodatek varchar(50) default 'papryczka chili',
+id_konsumenta int,
+PRIMARY KEY(id_przetworu),
+FOREIGN KEY(id_wykonawcy) REFERENCES postac(id_postaci),
+FOREIGN KEY(id_konsumenta) REFERENCES postac(id_postaci)
+);
+
+INSERT INTO przetwory(id_przetworu,rok_produkcji,id_wykonawcy,zawartosc,dodatek,id_konsumenta) VALUES(
+'1','1654','3','bigos','papryczka chili','1'
+);
+
+
+5.Ucieczka
+INSERT INTO postac(id_postaci,nazwa,rodzaj,data_ur,wiek) VALUES 
+('4','Alfarin','wiking','1884-11-1','23'),
+('5','Baeng','wiking','1882-05-9','55'),
+('6','Geitir','wiking','1875-11-11','18'),
+('7','Haklang','wiking','1898-07-31','37'),
+('8','Ingegard','wiking','1745-10-13','29');
+
+CREATE TABLE statek(
+nazwa_statku varchar(20),
+rodzaj_statku enum('handlowy','wojskowy'),
+data_wodowania date,
+max_ladownosc int UNSIGNED,
+PRIMARY KEY(nazwa_statku)
+);
+
+INSERT INTO statek VALUES
+('Godzilla','wojskowy','1755-05-11','5000'),
+('Ramer','handlowy','1881-07-1','13214121');
+
+ALTER TABLE postac ADD funkcja varchar(20);
+
+UPDATE postac SET funkcja='kapitan' WHERE nazwa='Bjorn';
+
+ALTER TABLE postac ADD FOREIGN KEY(nazwa) REFERENCES statek(nazwa_statku);
