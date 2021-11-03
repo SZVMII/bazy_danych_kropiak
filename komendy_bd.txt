@@ -93,4 +93,31 @@ ALTER TABLE postac ADD funkcja varchar(20);
 
 UPDATE postac SET funkcja='kapitan' WHERE nazwa='Bjorn';
 
-ALTER TABLE postac ADD FOREIGN KEY(nazwa) REFERENCES statek(nazwa_statku);
+ALTER TABLE postac ADD nazwa_statku varchar(20);
+ALTER TABLE postac ADD FOREIGN KEY(nazwa_statku) REFERENCES statek(nazwa_statku);
+
+UPDATE postac SET nazwa_statku='Godzilla' where id_postaci=(1,3,5,6);
+
+DROP TABLE izba;
+
+DELETE FROM izba WHERE nazwa_izby='spizarnia';
+
+6.Cicha woda
+SELECT * FROM postac order by data_ur desc limit 2;
+DELETE FROM postac WHERE id='2';
+
+WYŁĄCZENIE SPRAWDZANIE POPRAWNOŚCI KLUCZY OBCYCH:
+SET foreign_key_checks =0;
+
+USUWANIE KLUCZA GŁÓWNEGO:
+ALTER TABLE tabela z references do tabeli gdzie chcemy usunac klucz gł DROP FOREIGN KEY ..._ibfk_...;
+ALTER TABLE przetwory DROP FOREIGN KEY przetwory_ibfk_1;
+
+USUWANIE AI:
+ALTER TABLE postac MODIFY id_postaci int;
+
+ALTER TABLE postac DROP primary key;
+
+ALTER TABLE postac ADD pesel varchar(11) PRIMARY KEY;
+
+ALTER TABLE postac MODIFY rodzaj ENUM('wiking','ptak','kobieta','syrena');
