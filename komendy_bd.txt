@@ -121,3 +121,20 @@ ALTER TABLE postac DROP primary key;
 ALTER TABLE postac ADD pesel varchar(11) PRIMARY KEY;
 
 ALTER TABLE postac MODIFY rodzaj ENUM('wiking','ptak','kobieta','syrena');
+
+GROUP BY - grupowanie
+
+SUM- sumowanie
+AVG - średnia arytmetyczna
+MAX - maximum
+MIN - minimum
+COUNT - zlicza ilość zwróconych wierszy
+DISTINCT - unikalne wartości w kolumnie
+
+SELECT rodzaj, sum(udzwig) from kreatura GROUP BY rodzaj;
+SELECT count(*) from kreatura;
+SELECT count(distinct rodzaj) from kreatura;
+SELECT avg(waga) from kreatura where rodzaj = wiking;
+SELECT rodzaj, count(rodzaj) avg(waga) from kreatura group by rodzaj;
+SELECT rodzaj, avg(year(now()) - year(dataUr))from kreatura group by rodzaj;
+
