@@ -138,3 +138,17 @@ SELECT avg(waga) from kreatura where rodzaj = wiking;
 SELECT rodzaj, count(rodzaj) avg(waga) from kreatura group by rodzaj;
 SELECT rodzaj, avg(year(now()) - year(dataUr))from kreatura group by rodzaj;
 
+Lab06
+Zad.4
+SELECT * FROM kreatura k inner join kretura k2 on k.idKreatury!=k2.idKreatury;
+SELECT * FROM kreatura k inner join ekwipunek e on k.idKreatury=e.idKreatury inner join zasob z on e.idZasobu=z.idZasobu where z.rodzaj='jedzenie' order by k.dataUr desc limit 5;
+
+Zad.5
+a)
+SELECT k.rodzaj, avg(e.ilosc*z.waga) FROM kreatura k inner join ekwipunek e on k.idKreatury=e.idKreatury inner join zsob z on e.idZasobu=z.idZasobu where k.rodzaj not in('waz','malpa') group by k.rodzaj having sum(e.ilosc)<30;
+b)
+SELECT k.nazwa, k.rodzaj, k.dataUr from kreatura k, (select rodzaj, min(dataUr) as min, max(dataUr) as max from kreatura group by rodzaj) as pod where k.dataUr = pod.min or k.dataUr=pod.max and k.rodzaj=pod.rodzaj;
+
+Lab07
+Zad.1
+a)
