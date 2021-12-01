@@ -152,3 +152,26 @@ SELECT k.nazwa, k.rodzaj, k.dataUr from kreatura k, (select rodzaj, min(dataUr) 
 Lab07
 Zad.1
 a)
+INSERT INTO kreatura SELECT * FROM wikingowie.kreatura;
+b)
+SELECT nazwa FROM kreatura k inner join uczestnicy u on k.idKreatury=u.id_uczestnika where 
+c)
+SELECT w.nazwa, SUM(e.ilosc) FROM wyprawa w inner join uczestnicy u on w.id_wyprawy=u.id_wyprawy inner join kreatura k on u.id_uczestnika=k.idKreatury inner join ekwipunek e on k.idKreatury=e.idKreatury GROUP BY w.nazwa;
+
+Zad.2
+a)
+SELECT w.nazwa, count(u.id_uczestnika), group_concat(k.nazwa separator '|') FROM wyprawa w inner join uczestnicy u on w.id_wyprawy=u.id_wyprawy inner join kreatura k on u.id_uczestnika=k.idKreatury GROUP BY w.nazwa;
+b)
+SELECT e.idEtapu, e.idWyprawy, s.nazwa, k.nazwa FROM etapy_wyprawy e inner join sektor s on e.sektor=s.id_sektora inner join wyprawa w on e.idWyprawy=w.id_wyprawy inner join kreatura k on w.kierownik=k.idKreatury ORDER BY w.data_rozpoczecia, e.idEtapu;
+
+Zad.3
+a)
+SELECT s.nazwa, count(s.id_sektora) FROM sektor s left join etapy_wyprawy ew on s.id_sektora=ew.sektor GROUP BY s.nazwa;
+b)
+SELECT k.nazwa, if(count(u.id_uczestnika)>0, 'bral udzialu w wyprawie','nie bral udzialu w wyprawie') FROM kreatura k left join uczestnicy u on k.idKreatury=u.id_uczestnika GROUP BY k.nazwa;
+
+Zad.4
+a)
+SELECT w.nazwa, sum(length(ew.dziennik)) FROM wyprawa w inner join etapy_wyprawy ew on w.id_wyprawy=ew.idWyprawy GROUP BY w.nazwa having sum(length(ew.dziennik)) <400;
+b)
+SELECT w.idWyprawy, z.waga*e.ilosc
