@@ -174,4 +174,16 @@ Zad.4
 a)
 SELECT w.nazwa, sum(length(ew.dziennik)) FROM wyprawa w inner join etapy_wyprawy ew on w.id_wyprawy=ew.idWyprawy GROUP BY w.nazwa having sum(length(ew.dziennik)) <400;
 b)
-SELECT w.idWyprawy, z.waga*e.ilosc
+SELECT w.nazwa, sum(e.ilosc*z.waga) / count(distinct u.id_uczestnika) from uczestnicy u left join wyprawa w on w.id_wyprawy=u.id_wyprawy left join kreatura k on k.idKreatury=u.id_uczestnika left join ekwipunek e on e.idKreatury=k.idKreatury left join zasob z on z.idZasobu=e.idZasobu group by w.id_wyprawy;
+
+ZTI_BAZY
+Zad.1
+1)select nazwisko from pracownik order by nazwisko ASC;
+2)select imie, nazwisko, pensja from pracownik where data_urodzenia > 1979;
+3)select * from pracownik where pensja between 3500 and 5000;
+4)select * from stan_magazynowy where ilosc >10;
+5)select * from towar where nazwa_towaru like 'A%' or 'B%' or 'C%';
+6)select * from klient where czy_firma =0;
+7)select * from zamowienie order by data_zamowienia DESC limit 5;
+8)select * from pracownik order by pensja asc limit 5;
+9)
